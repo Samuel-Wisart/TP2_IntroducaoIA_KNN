@@ -1,0 +1,132 @@
+ESBOCO DETALHADO DO PROJETO - TP2 DE APRENDIZADO DE MAQUINA
+
+1. O QUE FOI CRIADO
+
+Criei um esboco de projeto em Python pensado para facilitar a leitura e a futura implementacao do trabalho pratico. A ideia principal foi separar cada responsabilidade em um arquivo especifico, para que o codigo fique intuitivo, facil de localizar e simples de manter.
+
+A estrutura criada foi esta:
+
+- src/
+  - data_loader.py: leitura e separacao dos dados.
+  - metrics.py: metricas usadas no kNN.
+  - knn_custom.py: implementacao propria do k-Nearest Neighbors.
+  - kmeans_custom.py: implementacao propria do k-Means.
+  - compare_sklearn.py: comparacao com a biblioteca scikit-learn.
+  - main.py: ponto de entrada para executar os experimentos.
+- reports/: pasta reservada para o relatorio final, imagens e tabelas.
+- results/: pasta reservada para salvar saidas dos experimentos, como matrizes de confusao, centrides e metricas.
+- README.txt: instrucoes curtas de uso.
+- requirements.txt: lista de dependencias do projeto.
+
+2. POR QUE ESSA ORGANIZACAO E INTUITIVA
+
+A separacao por responsabilidade evita um arquivo unico grande com tudo misturado. Isso e importante porque o trabalho envolve duas tarefas diferentes, uma supervisionada e outra nao supervisionada, alem de uma terceira etapa de comparacao com scikit-learn. Quando cada parte fica em um modulo proprio, a leitura fica mais natural:
+
+- quem quer entender a leitura dos dados olha primeiro data_loader.py;
+- quem quer entender as metricas olha metrics.py;
+- quem quer entender o KNN olha knn_custom.py;
+- quem quer entender o K-Means olha kmeans_custom.py;
+- quem quer rodar tudo olha main.py;
+- quem quer comparar com bibliotecas prontas olha compare_sklearn.py.
+
+3. COMO O FLUXO DO PROJETO DEVE FUNCIONAR
+
+A estrutura foi pensada para este fluxo:
+
+- ler os arquivos nba_treino.csv e nba_teste.csv;
+- preparar os atributos numericos;
+- aplicar o kNN nos dados de teste usando diferentes valores de k;
+- calcular matriz de confusao, acuracia, precisao, recall e F1;
+- aplicar o k-Means nos dados combinados de treino e teste;
+- analisar os centroides e comparar os clusters com os rotulos originais;
+- repetir os experimentos com scikit-learn para comparar os resultados.
+
+4. O QUE CADA ARQUIVO DEVE CONTER
+
+4.1 data_loader.py
+
+Este arquivo deve concentrar tudo que for relacionado a leitura e organizacao dos dados. A intencao e evitar repeticao de codigo nos demais arquivos.
+
+Funcoes esperadas:
+- carregar CSVs;
+- separar atributos e alvo;
+- juntar treino e teste quando necessario para o k-Means;
+- retornar os dados em formato facil de usar pelas demais partes.
+
+4.2 metrics.py
+
+Este arquivo vai reunir funcoes de avaliacao do kNN. A separacao e util porque as metricas aparecem em mais de um ponto do trabalho.
+
+Funcoes esperadas:
+- matriz de confusao;
+- acuracia;
+- precisao;
+- recall;
+- F1.
+
+4.3 knn_custom.py
+
+Aqui fica a implementacao manual do algoritmo kNN. A ideia geral e:
+
+- armazenar os exemplos de treino;
+- calcular distancias entre um exemplo de teste e todos os exemplos de treino;
+- selecionar os k vizinhos mais proximos;
+- votar na classe mais frequente;
+- devolver a predicao.
+
+Esse modulo deve ser independente da versao pronta do scikit-learn, para que a comparacao seja justa.
+
+4.4 kmeans_custom.py
+
+Aqui fica a implementacao manual do k-Means. A ideia geral e:
+
+- escolher centroides iniciais;
+- atribuir cada ponto ao centroide mais proximo;
+- recalcular os centroides com base nos pontos do cluster;
+- repetir ate estabilizar ou ate atingir um numero maximo de iteracoes.
+
+Esse modulo deve guardar os centroides finais e os clusters encontrados.
+
+4.5 compare_sklearn.py
+
+Este arquivo serve para organizar a comparacao com scikit-learn. Ele deve executar os mesmos experimentos, mas usando:
+
+- KNeighborsClassifier para o kNN;
+- KMeans para o k-Means.
+
+A ideia e manter a mesma base de dados e comparar os resultados diretamente.
+
+4.6 main.py
+
+Este sera o ponto de entrada do projeto. Ele pode funcionar como um menu simples ou como um script que executa os experimentos em sequencia.
+
+Sugestao de comportamento:
+- executar o kNN com k = 2, 10, 50 e um valor adicional escolhido por voce;
+- executar o k-Means com k = 2 e k = 3;
+- salvar os resultados em arquivos dentro de results/.
+
+5. DETALHES IMPORTANTES PARA A IMPLEMENTACAO FUTURA
+
+- Os dados possuem coluna de resposta TARGET_5Yrs, que deve ser usada apenas no kNN e na analise dos clusters.
+- Para o k-Means, essa coluna nao entra no treino do algoritmo, mas pode ser usada depois para verificar relacao entre clusters e classes originais.
+- Como os atributos estao em escalas diferentes, e recomendavel normalizar ou padronizar os dados antes de calcular distancias.
+- No kNN, a distancia euclidiana costuma ser a escolha mais simples e coerente para esse tipo de trabalho.
+- No k-Means, os centroides devem ser apresentados em formato legivel, preferencialmente com os nomes das colunas.
+- Resultados intermediarios devem ser salvos em results/ para facilitar a escrita do relatorio.
+
+6. O QUE AINDA NAO FOI IMPLEMENTADO
+
+Este envio ainda e um esboco organizacional. Os algoritmos em si ainda precisam ser preenchidos com a logica completa. Isso foi proposital para deixar a estrutura limpa e permitir evoluir o trabalho sem precisar reorganizar tudo depois.
+
+7. COMO ISSO AJUDA NA ENTREGA
+
+Essa estrutura facilita a producao dos itens pedidos na especificacao do trabalho:
+
+- codigos-fonte organizados;
+- arquivo readme.txt com instrucoes de execucao;
+- relatorio com os resultados e a discussao;
+- comparacao com scikit-learn.
+
+8. PROXIMO PASSO RECOMENDADO
+
+A proxima etapa natural e implementar os arquivos do modulo src/ com as funcoes e classes principais, depois incluir scripts de execucao e por fim gerar as tabelas e graficos para o relatorio.
