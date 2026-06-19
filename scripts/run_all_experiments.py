@@ -18,8 +18,8 @@ RESULTS_DIR = ROOT / "results"
 
 
 def main() -> None:
-    knn_k_values = [2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 7]
-    kmeans_k_values = [2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 7]
+    knn_k_values = [2, 10, 50, 7]
+    kmeans_k_values = [2, 3]
 
     run_knn_experiment(TRAIN_FILE, TEST_FILE, knn_k_values, RESULTS_DIR / "knn")
     run_knn_sklearn_comparison(TRAIN_FILE, TEST_FILE, knn_k_values, RESULTS_DIR / "knn_sklearn")
